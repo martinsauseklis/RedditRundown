@@ -1,11 +1,53 @@
 import { articleStyle, frameStyle, headLine, paragraphStyle, upDownStyle } from "./styles/articleStyle";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { articles } from "../resources/articleSource";
+
+
 
 
 export const Article = () => {
 
+    const style = {
+        position: "fixed",
+        width: "428px",
+        height: "189px",
+        left: "0px",
+        top: "740px",
+        background: "rgba(255, 255, 255, 0.97)",
+        border: "1px dashed #000000",
+        borderBottom: "none",
+        borderLeft: "none",
+        borderRight: "none",
+        zIndex: "1",
+        display: "block"
+    }
+
+    const textStyle = {
+        position: "relative",
+        width: "428px",
+        height: "155px",
+        marginLeft: "0px",
+        MarginTop: "771px",
+        fontFamily: "Montserrat",
+        fontStyle: "normal",
+        fontWeight: "bold",
+        fontSize: "25px",
+        lineHeight: "30px",
+        textAlign: "center",
+        color: "#C5C0C0",
+        
+    }
+    
+   
    
     const [height, setHeight] = useState();
+    
+    const randomArticleId = obj => {
+        return Math.floor((Math.random() * Object.keys(obj).length) + 1);
+    }
+
+    const randVal = randomArticleId(articles)
+
 
     const myRef = useCallback(node => {
       if (node !== null) {
@@ -13,21 +55,33 @@ export const Article = () => {
       }
     },[]);
 
+    const tap = useRef();
+    const article = useRef();
+
+    const handleClick = () => {
+        tap.current.style.display = "none"
+        article.current.style.overflow = "visible"
+    }
+ 
+    const handleArticleClick = () => {
+        if(tap.current.style.display === "none" && height > 782) {
+            tap.current.style.display = "block"
+        article.current.style.overflow = "hidden"
+        }
+    }
     
-    
-   
-   
-    
+    useEffect(() => {
+        height > 782 ? tap.current.style.display = "block" : tap.current.style.display = "none"
+    }, [height])
+
     return (
-        <div id="article"  style={articleStyle}>
-            
-            <div ref={myRef} style={frameStyle}>
+        <div ref={article}  style={articleStyle}>
+            <div ref={myRef} onClick={handleArticleClick}  style={frameStyle}>
                 <h2 style={headLine}>
-                    {height}
+                    {articles[randVal].title}
                 </h2>
                 <p style={paragraphStyle}>
-                Lorem   e2d 2ed 2ed2ed sectetur adipiscing elit. Maecenas aliquet sem quis consectetur tincidunt. Praesent nibh erat, tincidunt vitae vulputate vitae, consectetur in nisi. Ut consectetur nisl ac nisl tincidunt, in vestibulum tellus ultricies. Nunc nibh felis, interdum non sapien sed, efficitur imperdiet quam.                 
-                Lorem ipsum dolor sit blblblblwefkooj GFGH GY Y CH VGHCFGYCYC GHVHGHC GHGH CGJHC HC Hiowejfjweofjiow jojwofwe  amet, consectetur adipiscing elit. Maecenas aliquet sem quis consectetur tincidunt. Praesent nibh erat, tincidunt vitae vulputate vitae, consectetur in nisi. Ut consectetur nisl ac nisl tincidunt, in vestibulum tellus ultricies. Nunc nibh felis, interdum non sapien sed, efficitur imperdiet quam.                 
+                    {articles[randVal].text}
                 </p>
                 <div style={upDownStyle}>
                     <svg
@@ -70,12 +124,8 @@ export const Article = () => {
                                 
                                 
                                 }}>
-                            2345
+                            {articles[randVal].upvotes}
                     </p>
-
-
-
-
                     <svg style={{marginLeft: 21}}
                         xmlns="http://www.w3.org/2000/svg"
                         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -109,11 +159,15 @@ export const Article = () => {
                                 fontSize: 25,
                                 lineHeight: '30px',
                                 color: '#000000'}}>
-                        387
+                        {articles[randVal].downvotes}
                     </p>
                 </div>
+                
             </div>
-            
+            <div ref={tap} onClick={handleClick} style={style}>
+                <p style={textStyle}>Tap top view more</p>
+            </div>
         </div>
     );
-}
+} 
+

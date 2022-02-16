@@ -1,13 +1,14 @@
+
+
 export const articleStyle = {
 
    position: "absolute", 
    marginTop: 15,
    marginLeft: 14,
    width: "400px", 
-   height: 882,
+   height: 782,
    zIndex: 0,
-   
-
+   overflow: "hidden"
 }
 
 export const frameStyle = {
@@ -20,7 +21,8 @@ export const frameStyle = {
     background: "#FFFFFF",
     boxShadow:
       "0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25)",
-    borderRadius: "29px"
+    borderRadius: "29px",
+    
 }
 
 export const headLine = {
