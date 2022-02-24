@@ -1,4 +1,4 @@
-export const myHistoryStyle = {
+export const categoriesStyle = {
     position: "absolute", 
     width: "100%", 
     height: 782,
@@ -74,7 +74,7 @@ export const tr = {
 export const th = {
     
     height: 62,
-    width: 200,
+    width: 315,
 
     fontFamily: "Montserrat",
     fontStyle: "normal",
@@ -117,14 +117,14 @@ export const firstCol = {
     display: "flex",
     alignItems: "center",
     color: "#000000",
-    width: 200,
+    width: 315,
     height: 32,
   
 }
 
 export const secondCol = {
     height: 32,
-    width: 100,
+    width: 20,
     
     
     
@@ -140,16 +140,9 @@ export const secondCol = {
     color: "#3C7D32"
 }
 
-export const thirdCol = {
-    ...secondCol,
-    color: "#D62929",
-    
-}
 
-export const secondTh = {
-    width: 100,
-    
-}
+
+
 
 export const viewMore = {
     fontFamily: "Montserrat",
@@ -173,33 +166,3 @@ export const content = {
     borderBottom: "1px dashed #000000"
 }
 
-export const clearBtn = {
-    marginTop: 71,
-    marginLeft: 51,
-
-    display: "flex",
-    flexDirection: "row",
-    border: "none",
-    padding: "26px 32px",
-    position: "absolute",
-    width: "323px",
-    height: "82px",
-    alignItems: "center",
-    background: "#EB2D2D",
-    borderRadius: "3px",
-
-
-    
-}
-
-export const clearText = {
-    fontFamily: "Montserrat",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: "25px",
-    lineHeight: "30px",
-    display: "flex",
-    alignItems: "center",
-    textAlign: "center",
-    color: "#FFFFFF"
-}
