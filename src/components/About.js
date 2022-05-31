@@ -9,7 +9,7 @@ export const About = props => {
                     SwipeIt
             </h2>
             <p style={paragraphStyle}>
-                We are a group of innovative people who would like to improve content consumption on Reddit.
+                Just a project from Codecademy.
             </p>
                 
         </div>
