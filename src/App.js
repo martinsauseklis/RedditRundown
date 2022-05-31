@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Header } from './components/Header';
-import { Body } from './components/Body';
+import { Article } from './components/Article';
+
 
 
 import './App.css';
@@ -8,15 +9,11 @@ import './App.css';
 
 function App() {
 
-  
-
-  
 
   return (
   <div>
-    <Header />
     
-    <Body />
+    <Article />  
   </div>
     
   );

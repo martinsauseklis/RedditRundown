@@ -1,6 +1,6 @@
 export const aboutStyle = {
     position: "absolute", 
-  
+    top: 129,
     left: 14,
     width: "400px", 
     height: 782,

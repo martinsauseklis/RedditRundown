@@ -15,7 +15,8 @@ export const background = {
     opacity: "25%",
     
     width: "100%",
-    height: "100%"
+    height: 926 - 130,
+    
     
 }
 export const menuContainer = {
@@ -45,7 +46,8 @@ export const li = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderBottom: "1px dashed #000000"
+    borderBottom: "1px dashed #000000",
+    textDecoration: "none"
 }
 
 export const liFirst = {
@@ -69,5 +71,6 @@ export const liText = {
     textAlign: "center",
     color: "#000000",
     textDecoration: "none",
+    
     
 }

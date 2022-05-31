@@ -1,88 +1,95 @@
 import { articleStyle, frameStyle, headLine, paragraphStyle, upDownStyle } from "./styles/articleStyle";
-import { useRef, useState, useCallback, useEffect } from "react";
-import { articles } from "../resources/articleSource";
-
-
+import React, { useEffect, useRef, useState } from "react";
 
 
 export const Article = () => {
 
-    const style = {
-        position: "fixed",
-        width: "428px",
-        height: "189px",
-        left: "0px",
-        top: "740px",
-        background: "rgba(255, 255, 255, 0.97)",
-        border: "1px dashed #000000",
-        borderBottom: "none",
-        borderLeft: "none",
-        borderRight: "none",
-        zIndex: "1",
-        display: "block"
-    }
-
-    const textStyle = {
-        position: "relative",
-        width: "428px",
-        height: "155px",
-        marginLeft: "0px",
-        MarginTop: "771px",
-        fontFamily: "Montserrat",
-        fontStyle: "normal",
-        fontWeight: "bold",
-        fontSize: "25px",
-        lineHeight: "30px",
-        textAlign: "center",
-        color: "#C5C0C0",
-        
-    }
+    
+    const [title, setTitle] = useState();
+    const [body, setBody] = useState();
+    const [upvotes, setUpvotes] = useState();
+    const [downvotes, setDownvotes] = useState();
+    const [isFetched, setIsFetched] = useState(false);
     
    
-   
-    const [height, setHeight] = useState();
-    
-    const randomArticleId = obj => {
-        return Math.floor((Math.random() * Object.keys(obj).length) + 1);
-    }
-
-    const randVal = randomArticleId(articles)
 
 
-    const myRef = useCallback(node => {
-      if (node !== null) {
-        setHeight(node.getBoundingClientRect().height);
-      }
-    },[]);
 
-    const tap = useRef();
-    const article = useRef();
-
-    const handleClick = () => {
-        tap.current.style.display = "none"
-        article.current.style.overflow = "visible"
-    }
- 
-    const handleArticleClick = () => {
-        if(tap.current.style.display === "none" && height > 782) {
-            tap.current.style.display = "block"
-        article.current.style.overflow = "hidden"
-        }
-    }
-    
     useEffect(() => {
-        height > 782 ? tap.current.style.display = "block" : tap.current.style.display = "none"
-    }, [height])
+                   
+
+        if(localStorage.getItem("data") === null) {
+            fetch('https://www.reddit.com/.json?limit=100')
+            .then(res => {
+            return res.json()
+            })
+            .then(res => {
+                
+            return JSON.stringify(res)
+                
+            }).then(res => {
+                localStorage.setItem("data", res);
+                setIsFetched(true)
+            })
+        } else {setIsFetched(true)}
+            
+        
+    }, []);
+
+    useEffect(() => {
+        const obj = JSON.parse(localStorage.getItem("data"));
+        const dataArr = [];
+         const randArt = function() {
+            const random = Math.floor(Math.random() * dataArr.length);
+            setTitle(dataArr[random].title);
+            setBody(dataArr[random].body);
+            setUpvotes(dataArr[random].upvotes);
+            setDownvotes(dataArr[random].downvotes);
+        }
+        if (obj) {
+            
+            obj.data.children.forEach(el => {
+                if (el.data.selftext !== ''){
+                    dataArr.push({title: el.data.title, body: el.data.selftext, upvotes: el.data.ups, downvotes: Math.floor((el.data.ups/el.data.upvote_ratio - el.data.ups)) })
+                }
+                
+            })
+            
+            if (!title && !body && !upvotes) {
+                randArt();
+            }
+        
+        
+                
+            
+        }
+
+        
+
+        articleRef.current.addEventListener('click', randArt.bind(this))
+
+        
+        
+        return articleRef.current.removeEventListener('click', randArt.bind(this))
+        
+    }, [isFetched])
+
+    
+
+    const articleRef = useRef();
+
+  
 
     return (
-        <div ref={article}  style={articleStyle}>
-            <div ref={myRef} onClick={handleArticleClick}  style={frameStyle}>
+        <div ref={articleRef} style={articleStyle}>
+            <div style={frameStyle}>
                 <h2 style={headLine}>
-                    {articles[randVal].title}
+                  {title}
                 </h2>
                 <p style={paragraphStyle}>
-                    {articles[randVal].text}
+                  {body}
                 </p>
+                
                 <div style={upDownStyle}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +131,7 @@ export const Article = () => {
                                 
                                 
                                 }}>
-                            {articles[randVal].upvotes}
+                            {upvotes}
                     </p>
                     <svg style={{marginLeft: 21}}
                         xmlns="http://www.w3.org/2000/svg"
@@ -159,15 +166,12 @@ export const Article = () => {
                                 fontSize: 25,
                                 lineHeight: '30px',
                                 color: '#000000'}}>
-                        {articles[randVal].downvotes}
+                        {downvotes ? `~${downvotes}` : ''}
                     </p>
                 </div>
                 
             </div>
-            <div ref={tap} onClick={handleClick} style={style}>
-                <p style={textStyle}>Tap top view more</p>
-            </div>
+            
         </div>
     );
 } 
-

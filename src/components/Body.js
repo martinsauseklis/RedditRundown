@@ -14,7 +14,7 @@ export const Body = () => {
 
     return (
         <div style={bodyStyle}>
-            <About />
+            
             
         </div>
     );

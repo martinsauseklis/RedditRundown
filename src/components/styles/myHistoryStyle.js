@@ -3,7 +3,8 @@ export const myHistoryStyle = {
     width: "100%", 
     height: 782,
     zIndex: 0,
-    overflow: "hidden"
+    overflow: "hidden",
+    top: 129
 }
 
 export const title = {
